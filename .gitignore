@@ -1,0 +1,3 @@
+# Netlify local state (created by deploy tooling)
+.netlify/
+node_modules/
