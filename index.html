@@ -93,6 +93,15 @@
   .chip{font-size:11.5px;font-weight:600;padding:4px 10px;border-radius:999px;color:var(--accent);
     background:color-mix(in srgb,var(--accent) 10%,#fff);border:1px solid color-mix(in srgb,var(--accent) 35%,#fff)}
   .chip.paid{color:#9a4a00;background:#fff0e0;border-color:#f6b77a}
+  /* "Improved scanner" ribbon */
+  .improved{align-self:flex-start;display:inline-flex;align-items:center;gap:10px;padding:8px 14px 8px 10px;border-radius:14px;color:#fff;
+    background:linear-gradient(110deg,#f2711c,#e5418f,#7b4fe0,#2f80ed,#0e9f8e,#f2711c);background-size:300% 100%;
+    animation:shine 6s linear infinite;box-shadow:0 8px 20px -8px #e5418f;line-height:1.2}
+  .improved .spark{display:grid;place-items:center;width:26px;height:26px;border-radius:50%;background:#ffffff33;font-size:15px}
+  .improved b{display:block;font-size:12.5px;letter-spacing:1px;text-transform:uppercase;font-weight:800}
+  .improved small{display:block;font-size:12px;font-weight:600;opacity:.95}
+  @keyframes shine{to{background-position:300% 0}}
+  @media (prefers-reduced-motion:reduce){.improved{animation:none}}
   .open{align-self:flex-start;display:inline-flex;align-items:center;gap:6px;font-size:14px;font-weight:700;color:#fff;text-decoration:none;
     padding:9px 16px;border-radius:999px;background:linear-gradient(135deg,var(--accent),var(--accent2))}
   .open:hover{filter:brightness(1.08)}
@@ -264,7 +273,8 @@ const SCANNERS = [
     url: "https://forward-bias.streamlit.app/",
     accent: "#2f80ed", accent2: "#14b8d4",
     desc: "Scores forward-looking data — consensus forward EPS and revenue growth, forward P/E and PEG, analyst upgrades and 12-month target upside — into a single forward-bias reading for each stock in an NSE universe. Optionally accepts your own Trendlyne export. Useful for spotting where earnings expectations are improving before price fully reflects it.",
-    chips: ["Forward EPS","PEG","Analyst revisions","Target upside"],
+    improved: true,
+    chips: ["Forward EPS","PEG","Analyst revisions","Target upside","Paid API data"],
     logo: `<svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round">
       <circle cx="32" cy="32" r="24"/><circle cx="32" cy="32" r="14"/><circle cx="32" cy="32" r="4" fill="currentColor"/>
       <path d="M32 32 52 12M44 12h8v8"/></svg>`
@@ -286,6 +296,7 @@ const SCANNERS = [
     url: "https://shantanu-sector-rotation.streamlit.app/",
     accent: "#7b4fe0", accent2: "#b14fe0",
     desc: "Ranks NSE sectoral, thematic and broad-cap indices on four legs — valuation, momentum, breadth and earnings — supplemented by FPI sector flows and FII/DII ownership trends. Drill down into any sector to see its leading stocks. Useful for understanding where money is rotating and which sectors look cheap or stretched.",
+    improved: true,
     chips: ["Valuation","Momentum","Breadth","FPI flows"],
     logo: `<svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round">
       <path d="M32 32V8a24 24 0 0 1 24 24H32Z" fill="currentColor" fill-opacity=".3"/>
@@ -298,6 +309,7 @@ const SCANNERS = [
     accent: "#2e9e4f", accent2: "#8cc63f",
     desc: "Evaluates Indian mutual fund schemes against the CAARESA checklist — Category, Age, AUM, Return, Expense ratio, Sortino ratio and Alpha — to shortlist consistent, cost-efficient funds within each category. A separate entry-timing tab looks at NAV Z-scores, exit loads and lock-ins without altering the core score.",
     credit: "CAARESA is an exclusive copyright of WEALTHCON.",
+    improved: true,
     chips: ["Category","Sortino","Alpha","Expense ratio"],
     logo: `<svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round">
       <path d="M32 56V30"/><path d="M32 30c0-10 8-16 18-16 0 10-8 16-18 16Z" fill="currentColor" fill-opacity=".3"/>
@@ -339,6 +351,10 @@ const SCANNERS = [
         <span class="num">0${i + 1}</span>
         <a class="logo-link" href="${s.url}" target="_blank" rel="noopener noreferrer"
            aria-label="Open ${s.title}" title="Open ${s.title}">${s.logo}</a>
+        ${s.improved ? `<div class="improved" role="note">
+          <span class="spark" aria-hidden="true">✦</span>
+          <span><b>Improved scanner</b><small>Better features · Actionable insights</small></span>
+        </div>` : ''}
         <div>
           <div class="tag">${s.tag}</div>
           <h3>${s.title}</h3>
